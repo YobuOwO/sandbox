@@ -1,2 +1,2 @@
 var date = Date();
-document.getElementById("date").write(date + "<br>");
+document.getElementById("date").innerHTML(date + "<br>");
