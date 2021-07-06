@@ -5,7 +5,10 @@
 <body>
     <header>
         <h1>Welcome</h1><br>
-        <p id = "date">Test</p>
+        <script>
+            var date = Date();
+            document.write(date + "<br>");
+        </script>
         <nav>
             <a href="https://yobuowo.github.io/YobuOwO/index.html">Main&nbsp;</a> 
             <a href="https://yobuowo.github.io/YobuOwO/manga.html">Ongoing Manga List&nbsp;</a>
@@ -19,11 +22,6 @@
     <footer>
 
     </footer>
-    <script>
-        var name = prompt("Name ples");
-        var date = Date();
-        console.log(name);
-        document.getElementById("date").innerHTML("Date: " + date);
-    </script>
+
 </body>
 </html>
