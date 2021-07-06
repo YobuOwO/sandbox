@@ -1,2 +1,5 @@
-var date = Date();
-$(document).getElementById("date").innerHTML(date + "<br>");
+function showDate() {
+    var date = Date();
+    $(document).getElementById("date").innerHTML(date + "<br>");
+    alert(date);
+}
