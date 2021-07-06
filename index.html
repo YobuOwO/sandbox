@@ -5,6 +5,7 @@
 <body>
     <header>
         <h1>Welcome</h1><br>
+        <p id = "date"></p>
         <nav>
             <a href="https://yobuowo.github.io/YobuOwO/index.html">Main&nbsp;</a> 
             <a href="https://yobuowo.github.io/YobuOwO/manga.html">Ongoing Manga List&nbsp;</a>
@@ -14,12 +15,15 @@
             <a href="https://www.twitch.tv/yobu">Twitch channel&nbsp;</a> 
         </nav>
     </header>
-    <p id = "test">Just using github pages both as a place to practice HTML/CSS/JavaScript, and as a place to organize my thoughts and plans</p>
-    <script>
-        document.getElementById("test").innerHTML = "Test yo wasaaaap";
-    </script>
+    <p id = "intro">Just using github pages both as a place to practice HTML/CSS/JavaScript, and as a place to organize my thoughts and plans</p>
     <footer>
 
     </footer>
+    <script>
+        var name = prompt("Name ples");
+        var date = Date();
+        console.log(name);
+        document.getElementById("date").innerHTML(date);
+    </script>
 </body>
 </html>
