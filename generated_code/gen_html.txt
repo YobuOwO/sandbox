@@ -1,5 +1,0 @@
-<div id="alert_container">
-  <div id="alert_title">
-    NAME HERE
-  </div>
-</div>
