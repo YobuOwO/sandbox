@@ -6,7 +6,7 @@
 </head>
 <body>
     <div id="alert_frame">
-        <iframe src="alert_frame.html" height="500" width="500" frameborder="0" id="alert_iframe"></iframe>
+        <iframe src="alert_frame.php" height="500" width="500" frameborder="0" id="alert_iframe"></iframe>
     </div>
     <div id ="main_settings">
         <span>
@@ -46,9 +46,12 @@
         </div>
     </div>
     <div id="code_frames">
-        <iframe src="generated_code/gen_html.txt" height="500" width="500" frameborder="0" id="html_iframe"></iframe>
-        <iframe src="generated_code/gen_css.txt" height="500" width="500" frameborder="0" id="css_iframe"></iframe>
-        <iframe src="generated_code/gen_js.txt" height="500" width="500" frameborder="0" id="js_iframe"></iframe>
+        <span id="html_iframe_label">HTML</span>
+        <span id="css_iframe_label">CSS</span>
+        <span id="js_iframe_label">JS</span><br>
+        <iframe src="generated_code/gen_html.html" height="500" width="500" frameborder="0" id="html_iframe"></iframe>
+        <iframe src="generated_code/gen_css.html" height="500" width="500" frameborder="0" id="css_iframe"></iframe>
+        <iframe src="generated_code/gen_js.html" height="500" width="500" frameborder="0" id="js_iframe"></iframe>
     </div>
     <!-- <iframe src="css/alert_style.css" height="200" width="300" frameborder="0" id="css_iframe"></iframe> -->
     <script type="text/javascript">
@@ -62,6 +65,7 @@
             var intro_keyframe_mid = "";
             var outro_keyframe_mid = "";
             let dynamicStyleSheet = null;
+            var animation_fill_mode = "forwards";
 
             const fade_keyframe_in = "opacity: 1;";
             const fade_keyframe_out = "opacity: 0;";
@@ -99,7 +103,6 @@
             }
             if(document.getElementById("intro_id").value == "Intro 3" || document.getElementById("outro_id").value == "Outro 3") {
                 iframe.contentWindow.document.getElementById("alert_title").style.textDecoration = "underline";
-                //iframe.contentWindow.document.getElementById("alert_title").style.textDecorationThickness = "7px";
             }
             switch(document.getElementById("intro_id").value) {
                 case "Intro 1":
@@ -158,15 +161,23 @@
                     animation_full += "fade_out";
                     break;
             }
-            var keyframes = "@keyframes full_animation {0% {" + intro_keyframe_start + "} 20% {" + intro_keyframe_mid + "} 40% {" + intro_keyframe_end + "} 60% {" + outro_keyframe_start + "} 80% {" + outro_keyframe_mid + "} 100% {" + outro_keyframe_end + "} }" //write this to file
-            var container_css = "#alert_container {position: absolute; top: 50%; left: 50%; animation-name: full_animation; animation-delay: " + delay_duration.toString()  + "s; animation-duration: " + document.getElementById("anim_duration").value.toString() + "s; animation-fill-mode: forwards;}"
+
+            var keyframes = "@keyframes full_animation {<br>&emsp;0% {" + intro_keyframe_start + "} <br>&emsp;20% {" + intro_keyframe_mid + "} <br>&emsp;40% {" + intro_keyframe_end + "} <br>&emsp;60% {" + outro_keyframe_start + "} <br>&emsp;80% {" + outro_keyframe_mid + "} <br>&emsp;100% {" + outro_keyframe_end + "} <br>}" //write this to file
+            var keyframes_clean = "@keyframes full_animation {0% {" + intro_keyframe_start + "} 20% {" + intro_keyframe_mid + "} 40% {" + intro_keyframe_end + "} 60% {" + outro_keyframe_start + "} 80% {" + outro_keyframe_mid + "} 100% {" + outro_keyframe_end + "} }"
+            var container_css = "#alert_container {<br>&emsp;position: absolute; <br>&emsp;top: 50%; <br>&emsp;left: 50%; <br>&emsp;animation-name: full_animation; <br>&emsp;animation-delay: " + delay_duration.toString()  + "s; <br>&emsp;animation-duration: " + document.getElementById("anim_duration").value.toString() + "s; <br>&emsp;animation-fill-mode:" + animation_fill_mode + ";<br>}"
+            var html_content = '&lt;div id="alert_container"&gt; <br>&emsp;&lt;div id="alert_title"&gt;<br>&emsp;&emsp;'  +  document.getElementById("alert_name").value + '<br>&emsp;&lt;/div&gt;<br>&lt;/div&gt;';
+
             dynamicStyleSheet.sheet.insertRule(
-                keyframes, dynamicStyleSheet.length
+                keyframes_clean, dynamicStyleSheet.length
             );
+
+            css_content = keyframes + "<br><br>" + container_css;
+            js_content = "";
+
             iframe.contentWindow.document.getElementById("alert_container").style.fontFamily = "Helvetica, Arial, sans-serif";
             iframe.contentWindow.document.getElementById("alert_container").style.animationName = "full_animation";
             iframe.contentWindow.document.getElementById("alert_container").style.animationDuration = document.getElementById("anim_duration").value.toString() + "s";
-            iframe.contentWindow.document.getElementById("alert_container").style.animationFillMode = "forwards";
+            iframe.contentWindow.document.getElementById("alert_container").style.animationFillMode = animation_fill_mode;
             iframe.contentWindow.document.getElementById("alert_container").style.animationDelay =  "0s";
             
 
@@ -181,12 +192,21 @@
             iframe.contentWindow.document.getElementById("animation-name").innerHTML = animation_full;
             iframe.contentWindow.document.getElementById("duration").innerHTML = document.getElementById("anim_duration").value.toString() + "s";
 
+            generateFile(html_content, css_content, js_content);
         }
         function generate() {
             var iframe = document.getElementById("alert_iframe");
             
             iframe.contentWindow.document.getElementById("alert_title").innerHTML = document.getElementById("alert_name").value;
             selectAnimation(iframe);
+        }
+        function generateFile(html_content, css_content, js_content) {
+            var html_iframe = document.getElementById("html_iframe");
+            var css_iframe = document.getElementById("css_iframe");
+            var js_iframe = document.getElementById("js_iframe");
+            html_iframe.contentWindow.document.getElementById("html_content").innerHTML = html_content;
+            css_iframe.contentWindow.document.getElementById("css_content").innerHTML = css_content;
+            js_iframe.contentWindow.document.getElementById("js_content").innerHTML = js_content;
         }
     </script>
 </body>
